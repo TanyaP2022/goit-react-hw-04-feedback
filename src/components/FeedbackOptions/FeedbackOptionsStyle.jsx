@@ -6,9 +6,12 @@ export const Button = styled.button`
     text-align: center;
     padding: 5px;
     margin: 5px;
-    background-color: #a4eaf5;
-    border: 1px solid white;
     border-radius: 10%;
+    border: none;
+    box-shadow: 1px 1px 1px rgb(114, 208, 252), 
+                4px 4px 4px rgb(114, 208, 252), 
+                1px 4px 6px rgb(114, 208, 252);
+
 `
 
 export const List = styled.ul`
