@@ -27,21 +27,22 @@ class Counter extends Component {
 
   render() {
     const { good, neutral, bad } = this.state;
+    const { leaveFeedback, totalFeedback, positiveFeedback } = this;
     return (
       <Container>
         <Section title = "Please leave your feedback"/>
         <FeedbackOptions
           options={['good', 'neutral', 'bad']}
-          onLeaveFeedback={this.leaveFeedback}
+          onLeaveFeedback={leaveFeedback}
         />
         <Section title="Statistics" />
-        {this.totalFeedback() ?
+        {totalFeedback() ?
           <Statistics
             good={good}
             neutral={neutral}
             bad={bad}
-            onTotalFeedback={this.totalFeedback()}
-            onPositiveFeedback={this.positiveFeedback()}
+            onTotalFeedback={totalFeedback()}
+            onPositiveFeedback={positiveFeedback()}
           />
           : <h2>There is no feedback</h2>}
     </Container>
