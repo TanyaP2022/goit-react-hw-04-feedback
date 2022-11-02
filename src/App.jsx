@@ -1,42 +1,51 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 import {Container} from './AppStyle'
 import { FeedbackOptions } from 'components/FeedbackOptions/FeedbackOptions';
 import { Section } from 'components/Section/Section';
 import {Statistics} from 'components/Statistics/Statistics'
 
-class Counter extends Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0
+export default function Component() {
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+
+  const feedback = { good, neutral, bad };
+
+  const leaveFeedback = options => {
+    switch (options) {
+      case 'good':
+        setGood(good + 1);
+        break;
+      
+      case 'neutral':
+        setNeutral(neutral + 1);
+        break;
+      
+      case 'bad':
+        setBad(bad + 1);
+        break;
+      
+      default:
+        return;
+    }
+  };
+  const totalFeedback = () => {
+    return good + neutral + bad;
   };
 
-  leaveFeedback = options => {
-    this.setState({ [options]: this.state[options] + 1 })
-  };
-  totalFeedback = () => {
-    const { good, neutral, bad } = this.state;
-    return good + neutral + bad
+  const positiveFeedback = () => {
+    return Math.round((good/totalFeedback())*100)||0
   };
 
-  positiveFeedback = () => {
-    const { good, neutral, bad } = this.state;
-    const total = good + neutral + bad;
-    return Math.round(good/total*100)||0
-  };
-
-  render() {
-    const { good, neutral, bad } = this.state;
-    const { leaveFeedback, totalFeedback, positiveFeedback } = this;
     return (
       <Container>
         <Section title = "Please leave your feedback"/>
         <FeedbackOptions
-          options={['good', 'neutral', 'bad']}
+          options={Object.keys(feedback)}
           onLeaveFeedback={leaveFeedback}
         />
         <Section title="Statistics" />
-        {totalFeedback() ?
+        {totalFeedback() > 0 ?
           <Statistics
             good={good}
             neutral={neutral}
@@ -47,9 +56,4 @@ class Counter extends Component {
           : <h2>There is no feedback</h2>}
     </Container>
   );
-}
-
-
-
-}
-export default Counter;
+};
