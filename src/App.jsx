@@ -33,8 +33,10 @@ export default function Component() {
     return good + neutral + bad;
   };
 
+  const total = totalFeedback();
+
   const positiveFeedback = () => {
-    return Math.round((good/totalFeedback())*100)||0
+    return Math.round((good/total)*100)||0
   };
 
     return (
@@ -45,12 +47,12 @@ export default function Component() {
           onLeaveFeedback={leaveFeedback}
         />
         <Section title="Statistics" />
-        {totalFeedback() > 0 ?
+        {total > 0 ?
           <Statistics
             good={good}
             neutral={neutral}
             bad={bad}
-            onTotalFeedback={totalFeedback()}
+            onTotalFeedback={total}
             onPositiveFeedback={positiveFeedback()}
           />
           : <h2>There is no feedback</h2>}
